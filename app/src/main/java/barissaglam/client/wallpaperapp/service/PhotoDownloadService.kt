@@ -70,6 +70,8 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
                     is Resource.Error -> {
                         onDownloadComplete(getString(R.string.error_unknown))
                     }
+
+                    Resource.Empty -> TODO()
                 }
             }.launchIn(GlobalScope)
         }
