@@ -54,12 +54,13 @@ class PhotosAdapter : PagedListAdapter<PhotoViewItem, BaseViewHolder<*>>(PhotoIt
     val spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
         override fun getSpanSize(position: Int): Int {
             return if (getItemViewType(position) == ItemType.TYPE_LOAD_MORE.viewType()) {
-                2
+                3 // This makes the load more item span all columns
             } else {
-                if (position % 3 == 0) 2 else 1
+                1 // All other items span a single column
             }
         }
     }
+
 
     override fun getItemCount(): Int {
         return if (super.getItemCount() != 0) super.getItemCount() + 1 else 0

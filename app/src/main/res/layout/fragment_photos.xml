@@ -13,14 +13,16 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
+        android:background="@drawable/glassmorphism_background_no_rounded"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbarLayout"
+            android:paddingBottom="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorBackground"
+            android:background="@color/colorAccent"
             android:elevation="0dp"
             app:elevation="0dp">
 
@@ -47,13 +49,13 @@
 
                     <ImageView
                         android:id="@+id/imageViewLogo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/defaultMargin"
-                        android:layout_marginTop="@dimen/defaultMargin"
-                        android:src="@drawable/ic_hd_black_24dp"
+                        android:layout_width="61dp"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/theprimelogo2"
                         app:layout_constraintTop_toBottomOf="@id/statusBarSize"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
 
                     <ImageButton
                         android:id="@+id/imageButtonFavorite"
@@ -71,24 +73,26 @@
                         android:id="@+id/textViewTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/defaultMargin"
-                        android:layout_marginStart="@dimen/defaultMargin"
-                        android:text="@string/title_home"
-                        android:textColor="@color/textColorMain"
+                        android:layout_marginTop="8dp"
+                        android:text="Prime Wallpaper"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/textSizeBigTitle"
                         app:layout_constraintTop_toBottomOf="@id/imageViewLogo"
-                        app:fontFamily="@font/font_bold_sec" />
+                        app:fontFamily="@font/font_medium"
+                        tools:layout_editor_absoluteX="16dp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/textViewDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/defaultMargin"
-                        android:layout_marginStart="@dimen/defaultMargin"
+                        android:layout_marginTop="8dp"
+                        android:textAlignment="center"
                         android:text="@string/description_home"
-                        android:textColor="@color/textColorSecondary"
+                        android:textColor="@color/white"
                         app:layout_constraintTop_toBottomOf="@id/textViewTitle"
-                        app:fontFamily="@font/font_regular_sec" />
+                        app:fontFamily="@font/font_regular_sec"
+                        tools:layout_editor_absoluteX="16dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
@@ -109,7 +113,9 @@
                 android:paddingStart="@dimen/_4dp"
                 android:scrollbars="none"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:layout_height="70dp" />
+                tools:layout_height="70dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <barissaglam.client.wallpaperapp.view.BaseView
                 android:id="@+id/baseView"
@@ -129,8 +135,7 @@
                     android:paddingStart="@dimen/_4dp"
                     tools:listitem="@layout/item_photo"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    tools:itemCount="2"
-                    app:spanCount="2" />
+                    app:spanCount="3" />
             </barissaglam.client.wallpaperapp.view.BaseView>
 
 

@@ -1,25 +1,26 @@
 <resources>
-    <string name="app_name">Wallpaper App</string>
+    <string name="app_name">Prime Wallpaper</string>
 
     <!-- Error -->
-    <string name="error_unknown">We are unable to complete your request now. Please try again later!</string>
-    <string name="error_connection_not_found">Please check your connection settings and try again.</string>
-    <string name="error_connection_timeout">Connection timed out!</string>
-    <string name="title_home">Wallpaper App</string>
-    <string name="description_home">All photos are free to download and use under the Unsplash License.</string>
-    <string name="title_source">Source:</string>
-    <string name="title_license">License:</string>
-    <string name="title_profile">Profile:</string>
-    <string name="title_owner">Owner:</string>
-    <string name="title_information">Information</string>
-    <string name="button_set">SET</string>
-    <string name="button_download">DOWNLOAD</string>
-    <string name="photo_downloading">Photo is downloading…</string>
-    <string name="error_no_permission">You have to allow it to continue.</string>
-    <string name="not_supported_set_wallpaper">Not supported to apply wallpaper.</string>
-    <string name="download_success">Download is successful.</string>
-    <string name="downloaded">Downloaded %s</string>
-    <string name="you_have_no_fav">You have no favorites!</string>
-    <string name="title_favorites">Favorites</string>
-    <string name="wallpaper_applied">Wallpaper is applied.</string>
+    <string name="error_unknown">Kami tidak dapat menyelesaikan permintaan Anda sekarang. Silakan coba lagi nanti!</string>
+    <string name="error_connection_not_found">Silakan periksa pengaturan koneksi Anda dan coba lagi.</string>
+    <string name="error_connection_timeout">Koneksi timeout!</string>
+    <string name="title_home">Prime Wallpaper</string>
+    <string name="description_home">Semua foto gratis untuk diunduh dan digunakan di bawah Lisensi Unsplash.</string>
+    <string name="title_source">Sumber:</string>
+    <string name="title_license">Lisensi:</string>
+    <string name="title_profile">Profil:</string>
+    <string name="title_owner">Pemilik:</string>
+    <string name="title_information">Informasi</string>
+    <string name="button_set">ATUR</string>
+    <string name="button_download">UNDUH</string>
+    <string name="photo_downloading">Foto sedang diunduh…</string>
+    <string name="error_no_permission">Anda harus mengizinkan untuk lanjut.</string>
+    <string name="not_supported_set_wallpaper">Tidak mendukung untuk menerapkan wallpaper.</string>
+    <string name="download_success">Unduhan berhasil.</string>
+    <string name="downloaded">Diunduh %s</string>
+    <string name="you_have_no_fav">Anda tidak memiliki wallpaper favorit!</string>
+    <string name="title_favorites">Favorit</string>
+    <string name="wallpaper_applied">Wallpaper ditetapkan.</string>
+
 </resources>

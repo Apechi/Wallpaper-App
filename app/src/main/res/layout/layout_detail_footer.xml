@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_dialog"
+        android:background="@drawable/glassmorphism_background"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical"
@@ -44,56 +44,62 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonDownload"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_36dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_8dp"
-            android:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/black"
             android:enabled="@{viewState.viewsEnabled()}"
             android:gravity="center"
             android:text="@string/button_download"
             android:textColor="@color/white"
+            app:cornerRadius="10dp"
             app:rippleColor="@color/colorPrimary"
             app:fontFamily="@font/font_bold"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageViewArrow" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/viewLine"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginTop="@dimen/_16dp"
-            android:background="@color/colorLine"
+            android:background="@color/white"
             app:layout_constraintTop_toBottomOf="@id/buttonDownload" />
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSet"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_36dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8dp"
-            android:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/black"
             android:enabled="@{viewState.viewsEnabled()}"
             android:gravity="center"
             android:text="@string/button_set"
             android:textColor="@color/white"
+            app:cornerRadius="10dp"
             app:rippleColor="@color/colorPrimary"
             app:fontFamily="@font/font_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/imageViewArrow" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewInfoTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_info_outline_black_24dp"
             android:gravity="center_vertical"
             android:text="@string/title_information"
-            android:textColor="@color/gray9B"
-            app:drawableTint="@color/gray9B"
-            app:layout_constraintTop_toBottomOf="@id/viewLine" />
+            android:textColor="@color/white"
+            app:drawableTint="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/viewLine"
+            tools:layout_editor_absoluteX="16dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewOwnerTitle"
@@ -185,7 +191,6 @@
             app:layout_constraintBottom_toBottomOf="@id/textViewSourceTitle"
             app:layout_constraintStart_toEndOf="@id/textViewSourceTitle"
             app:layout_constraintTop_toTopOf="@id/textViewSourceTitle" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,23 +5,35 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="photo"
             type="barissaglam.client.wallpaperapp.data.viewitem.PhotoViewItem" />
     </data>
 
-
-    <ImageView
+    <com.google.android.material.card.MaterialCardView
+        app:strokeColor="@color/colorBackground"
+        app:strokeWidth="2dp"
         android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_8dp"
         android:layout_marginEnd="@dimen/_4dp"
         android:layout_marginStart="@dimen/_4dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/temp"
-        app:imageUrl="@{photo.photoUrl}"
-        tools:layout_height="180dp" />
+        android:layout_marginTop="@dimen/_4dp"
+        android:background="@android:color/transparent"
+        app:cardCornerRadius="16dp"
+        android:clickable="true"
+        app:cardElevation="8dp">
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/temp"
+            app:imageUrl="@{photo.photoUrl}"
+            tools:layout_height="180dp"/>
+
+    </com.google.android.material.card.MaterialCardView>
 </layout>
