@@ -1,9 +1,11 @@
 package barissaglam.client.wallpaperapp.presentation.detail
 
+import android.annotation.SuppressLint
 import android.app.WallpaperManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import androidx.core.view.drawToBitmap
 import androidx.navigation.fragment.findNavController
 import barissaglam.client.wallpaperapp.R
@@ -55,19 +57,31 @@ class PhotoDetailFragment : BaseFragment<FragmentPhotoDetailBinding, PhotoDetail
      * 3 = Raw
      */
     private fun startDownloadService() {
-        if (PermissionManager.checkPermission(requireContext(), PermissionType.WRITE_EXTERNAL_STORAGE)) {
-            MaterialDialog(requireContext()).show {
-                listItems(R.array.wallpaper_download_options) { _, index, _ ->
-                    activity?.startService(Intent(activity, PhotoDownloadService::class.java).apply
-                    { putExtra(PhotoDownloadService.EXTRA_PHOTO_URL, getImageUrl(index)) })
-                    dismiss()
-                }
-                title(text = "Select Photo Size")
-                cancelable(false)
-                negativeButton(text = "CANCEL")
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) { // Check if the Android version is less than 10
+            if (PermissionManager.checkPermission(requireContext(), PermissionType.WRITE_EXTERNAL_STORAGE)) {
+                showDownloadOptionsDialog()
+            } else {
+                PermissionManager.requestPermission(this, PermissionType.WRITE_EXTERNAL_STORAGE)
             }
-        } else
-            PermissionManager.requestPermission(this, PermissionType.WRITE_EXTERNAL_STORAGE)
+        } else {
+            // For Android 10 and above, directly show the download options dialog
+            showDownloadOptionsDialog()
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun showDownloadOptionsDialog() {
+        MaterialDialog(requireContext()).show {
+            listItems(R.array.wallpaper_download_options) { _, index, _ ->
+                activity?.startService(Intent(activity, PhotoDownloadService::class.java).apply {
+                    putExtra(PhotoDownloadService.EXTRA_PHOTO_URL, getImageUrl(index))
+                })
+                dismiss()
+            }
+            title(text = "Select Photo Size")
+            cancelable(false)
+            negativeButton(text = "CANCEL")
+        }
     }
 
     private fun getImageUrl(index: Int): String? {
@@ -80,7 +94,7 @@ class PhotoDetailFragment : BaseFragment<FragmentPhotoDetailBinding, PhotoDetail
         }
     }
 
-    private fun setWallpaper() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    private fun setWallpaper() {
         showProgress()
         Thread(Runnable {
             try {
@@ -89,15 +103,15 @@ class PhotoDetailFragment : BaseFragment<FragmentPhotoDetailBinding, PhotoDetail
                 showSnackBar(message = getString(R.string.wallpaper_applied), type = SUCCESS)
             } catch (e: Exception) {
                 showSnackBar(message = getString(R.string.error_unknown), type = ERROR)
+            } finally {
+                dismissProgress()
             }
-            dismissProgress()
         }).start()
-    } else
-        showSnackBar(message = getString(R.string.not_supported_set_wallpaper), type = ERROR)
-
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == PermissionManager.RC_WRITE_EXTERNAL_STORAGE) {
+
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startDownloadService()
             } else {

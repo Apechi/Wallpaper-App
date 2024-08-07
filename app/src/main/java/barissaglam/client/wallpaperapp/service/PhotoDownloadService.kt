@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import barissaglam.client.wallpaperapp.R
 import barissaglam.client.wallpaperapp.domain.usecase.PhotoDownloadUseCase
@@ -32,6 +33,7 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
     private lateinit var notificationBuilder: NotificationCompat.Builder
     private lateinit var notificationManager: NotificationManager
 
+    @Deprecated("Deprecated in Java")
     override fun onHandleIntent(intent: Intent?) {
         intent?.extras?.let { bundle ->
             val imageUrl = bundle.getString(EXTRA_PHOTO_URL, "")
@@ -70,8 +72,7 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
                     is Resource.Error -> {
                         onDownloadComplete(getString(R.string.error_unknown))
                     }
-
-                    Resource.Empty -> TODO()
+                    else -> {}
                 }
             }.launchIn(GlobalScope)
         }
@@ -103,6 +104,7 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
 
     private fun getOutputStream(): OutputStream? {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            // For Android versions below 10
             val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + DIR_NAME
             val myDir = File(directory)
             if (!myDir.exists()) {
@@ -110,18 +112,20 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
             }
 
             val file = File(myDir, UUID.randomUUID().toString() + FILE_EXTENSION)
-            SingleMediaScanner(applicationContext, file)
+            SingleMediaScanner(applicationContext, file) // Scan the file to make it available in the gallery
             FileOutputStream(file)
         } else {
-            val resolver = contentResolver
+            // For Android 10 and above
+            val resolver = applicationContext.contentResolver
             val contentValues = ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, UUID.randomUUID().toString() + FILE_EXTENSION)
-                put(MediaStore.MediaColumns.MIME_TYPE, "images/jpg")
-                put(MediaStore.MediaColumns.RELATIVE_PATH, (Environment.DIRECTORY_DCIM).toString() + DIR_NAME)
+                put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg") // Correct MIME type for JPEG
+                put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM + DIR_NAME) // Use the correct relative path
             }
-            resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)?.let {
-                resolver.openOutputStream(it)
-            }
+
+            // Insert the new image into the MediaStore and get the URI
+            val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            return uri?.let { resolver.openOutputStream(it) } // Open the output stream for the new URI
         }
     }
 
@@ -143,7 +147,6 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
         notificationManager.notify(0, notificationBuilder.build())
     }
 
-
     companion object {
         const val EXTRA_PHOTO_URL = "EXTRA_PHOTO_URL"
         private const val CHANNEL_ID = "0"
@@ -152,4 +155,3 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
         private const val FILE_EXTENSION = ".jpg"
     }
 }
-
