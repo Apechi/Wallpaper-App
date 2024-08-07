@@ -1,10 +1,14 @@
 package barissaglam.client.wallpaperapp.presentation.photos.helper
 
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PageKeyedDataSource
 import barissaglam.client.wallpaperapp.data.viewitem.PhotoViewItem
 import barissaglam.client.wallpaperapp.presentation.photos.PhotosViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MovieItemPaginationHelper(private val viewModel: PhotosViewModel) : PageKeyedDataSource<Int, PhotoViewItem>() {
+
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PhotoViewItem>) {
         viewModel.page = PhotosViewModel.FIRST_PAGE
         viewModel.getPhotosByQuery(true) { viewState ->
@@ -25,5 +29,7 @@ class MovieItemPaginationHelper(private val viewModel: PhotosViewModel) : PageKe
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PhotoViewItem>) {}
+
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PhotoViewItem>) {
+    }
 }

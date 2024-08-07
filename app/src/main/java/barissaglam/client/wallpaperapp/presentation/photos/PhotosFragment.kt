@@ -1,5 +1,7 @@
 package barissaglam.client.wallpaperapp.presentation.photos
 
+import android.util.Log
+import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import barissaglam.client.wallpaperapp.R
@@ -19,10 +21,11 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding, PhotosViewModel>(), C
     override fun init() {
         setupRecyclerView()
         setupCategoryView()
+        setupSearchView()
     }
 
     override fun setUpViewModelStateObservers() {
-        viewModel.liveDataViewState_.observeNonNull(viewLifecycleOwner) { viewState ->
+        viewModel.liveDataViewState.observeNonNull(viewLifecycleOwner) { viewState ->
             binding.viewState = viewState
         }
         runOnlyFirstInit { observePhotosData() }
@@ -41,6 +44,24 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding, PhotosViewModel>(), C
         binding.imageButtonFavorite.setOnClickListener {
             findNavController().navigate(PhotosFragmentDirections.actionPhotosFragmentToFavoriteFragment())
         }
+    }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    Log.d("PhotosFragment", "Search Query Submitted: $it")
+                    viewModel.setSearchQuery(it)
+                }
+                observePhotosData()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Optionally handle real-time search if needed
+                return true
+            }
+        })
     }
 
     private fun setupCategoryView() {
@@ -62,6 +83,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding, PhotosViewModel>(), C
 
     override fun onCategoryClick(category: Category, index: Int) {
         viewModel.selectedCategoryIndex = index
+        viewModel.setSearchQuery(category.name)
         observePhotosData()
     }
 

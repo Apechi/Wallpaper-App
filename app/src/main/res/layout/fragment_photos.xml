@@ -107,7 +107,7 @@
                 android:id="@+id/categoryView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_24dp"
+                android:layout_marginTop="68dp"
                 android:clipToPadding="false"
                 android:paddingEnd="@dimen/_4dp"
                 android:paddingStart="@dimen/_4dp"
@@ -115,7 +115,26 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_height="70dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintBottom_toTopOf="@+id/baseView"
+                app:layout_constraintVertical_bias="0.51" />
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:queryHint="Search photos"
+                android:searchIcon="@drawable/baseline_search_24"
+                app:layout_constraintBottom_toTopOf="@+id/categoryView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/CustomSearchView" />
 
             <barissaglam.client.wallpaperapp.view.BaseView
                 android:id="@+id/baseView"

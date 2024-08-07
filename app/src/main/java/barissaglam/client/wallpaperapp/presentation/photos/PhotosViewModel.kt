@@ -1,5 +1,6 @@
 package barissaglam.client.wallpaperapp.presentation.photos
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -15,17 +16,29 @@ import barissaglam.client.wallpaperapp.util.Resource
 import barissaglam.client.wallpaperapp.view.categoryview.Category
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PhotosViewModel @Inject constructor(categoryUseCase: CategoryUseCase, private val photosUseCase: PhotosUseCase) : BaseViewModel() {
     /** LiveData for ViewState **/
-    private val liveDataViewState = MutableLiveData<PhotosFragmentViewState>()
-    val liveDataViewState_: LiveData<PhotosFragmentViewState> = liveDataViewState
+    private val _liveDataViewState = MutableLiveData<PhotosFragmentViewState>()
+    val liveDataViewState: LiveData<PhotosFragmentViewState> = _liveDataViewState
 
     var page = FIRST_PAGE
     var selectedCategoryIndex = 0
     val categoryList = ArrayList<Category>()
-    private var paginationHelper = MovieItemPaginationHelper(this)
+    var paginationHelper = MovieItemPaginationHelper(this)
+
+    private val _searchQuery = MutableLiveData<String>()
+    val searchQuery: LiveData<String> = _searchQuery
+
+
+
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
+        page = FIRST_PAGE
+
+    }
 
     init {
         categoryList.addAll(categoryUseCase.getCategories())
@@ -51,21 +64,16 @@ class PhotosViewModel @Inject constructor(categoryUseCase: CategoryUseCase, priv
     }
 
     fun getPhotosByQuery(updateViewState: Boolean, block: (PhotosFragmentViewState) -> Unit) {
-        photosUseCase.getPhotosByQuery(query = categoryList[selectedCategoryIndex].name, page = page)
-            .onEach { response ->
-                val viewState = PhotosFragmentViewState(response)
-                block(viewState)
-                if (updateViewState || response is Resource.Success || response is Resource.Error) {
-                    liveDataViewState.value = viewState
-                }
-                /*
-                    Pagination yaparken her sayfa çekildiğinde (1,2,3...) bu fonksiyon çalışacağı için genel sayfadaki loading progressbar 'updateViewState' ilk sayfada true gönderilerek gösterildi.
-                    Diğer isteklerde sayfadaki loading progressbar değil de recyclerview içindeki progressbar gösterileceği için 'updateViewState' diğer sayfalarda false gönderilerek
-                    Genel sayfadaki progressbar gösterilmemesi sağlandı. Resource error olduğunda error layoutu gösterileceği için ve success olduğunda her yeni gelen data ile işlem yapılacağı için
-                    Success ve Error durumlarında da ViewState güncellenmesi sağlandı.
-                    Daha iyi bir çözüm bulunabilir :) :)
-                 */
-            }.launchIn(viewModelScope)
+        _searchQuery.value?.let {
+            photosUseCase.getPhotosByQuery(query = it, page = page)
+                .onEach { response ->
+                    val viewState = PhotosFragmentViewState(response)
+                    block(viewState)
+                    if (updateViewState || response is Resource.Success || response is Resource.Error) {
+                        _liveDataViewState.value = viewState
+                    }
+                }.launchIn(viewModelScope)
+        }
     }
 
     companion object {

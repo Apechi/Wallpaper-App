@@ -21,6 +21,7 @@ class LocalRepository @Inject constructor(
         return arrayListOf(
             Category("Wallpapers"),
             Category("Abstract"),
+            Category("Anime"),
             Category("Animal"),
             Category("Art"),
             Category("Black"),

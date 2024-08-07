@@ -22,6 +22,14 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@drawable/search_view_background</item> <!-- White background -->
+        <item name="android:iconifiedByDefault">true</item> <!-- Show search icon -->
+        <item name="android:textColor">#FFFFFF</item> <!-- Text color inside SearchView -->
+        <item name="android:textColorHint">#888888</item> <!-- Hint text color -->
+        <item name="android:searchHintIcon">@drawable/baseline_search_24</item> <!-- Search icon drawable -->
+    </style>
+
     <style name="AppTheme.Splash">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowActionBar">false</item>
