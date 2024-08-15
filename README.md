@@ -1,6 +1,6 @@
 # Wallpaper-App
-I used Unsplash API.
-All photos are free to download and use under the Unsplash License.
+I used Unsplash API. (they changed regulation, so ill change it  using pinterest) -Apechi
+All photos are free to download and use under the Pinterest License.
 
 <img src="https://github.com/barissaglam/Wallpaper-App/blob/master/images/ss.png" width="220" height="440">
 
